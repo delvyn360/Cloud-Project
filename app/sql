@@ -1,0 +1,128 @@
+create table accounts (
+	id serial primary key,
+	firstname varchar(50) not NULL,
+	lastname varchar(50) not NULL,
+	username varchar(50) unique not NULL,
+	password varchar(64) not NULL,
+	email varchar(255) not NULL,
+	masterkey varchar(10) not NULL
+);
+
+create table users (
+	id serial primary key,
+	firstname varchar(50) not NULL,
+	lastname varchar(50) not NULL,
+	username varchar(50) unique not NULL,
+	email varchar(255) not NULL,
+	creation_timestamp timestamp not NULL
+);
+
+create table user_credentials (
+	id serial primary key,
+	user_id integer not NULL, foreign key (user_id) references users(id),
+	hashed_password varchar(32) not NULL
+);
+
+create table user_masterkey (
+	id serial primary key,
+	user_id integer not NULL, foreign key (user_id) references users(id),
+	encryption_key text not NULL,
+	encrypted_masterkey text not NULL
+);
+
+create table vault (
+	id serial primary key,
+	user_id integer not NULL, foreign key (user_id) references users(id),
+	vault_account_name varchar(50) not NULL,
+	vault_user_name varchar(50) not NULL,
+	vault_encrypted_passwords text not NULL
+);
+
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
+-- Source Database: Create a replication log table to track changes
+
+CREATE TABLE IF NOT EXISTS replication_logs (
+    id SERIAL PRIMARY KEY,
+    table_name TEXT,
+    operation VARCHAR(10),  -- INSERT, UPDATE, or DELETE
+    data JSONB,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	processed BOOLEAN DEFAULT false,
+	processed_at TIMESTAMP
+);
+
+-- Trigger function to log changes
+
+CREATE OR REPLACE FUNCTION log_replication_changes() 
+RETURNS TRIGGER AS $$ 
+BEGIN 
+    IF TG_OP = 'INSERT' THEN 
+        INSERT INTO replication_logs (table_name, operation, data) 
+        VALUES (TG_TABLE_NAME, 'INSERT', to_jsonb(NEW)); 
+    ELSIF TG_OP = 'UPDATE' THEN 
+        INSERT INTO replication_logs (table_name, operation, data) 
+        VALUES (TG_TABLE_NAME, 'UPDATE', to_jsonb(NEW)); 
+    ELSIF TG_OP = 'DELETE' THEN 
+        INSERT INTO replication_logs (table_name, operation, data) 
+        VALUES (TG_TABLE_NAME, 'DELETE', to_jsonb(OLD)); 
+    END IF; 
+    RETURN NULL; 
+END; 
+$$ LANGUAGE plpgsql;
+
+-- Create triggers on tables
+
+CREATE TRIGGER replication_changes 
+AFTER INSERT OR UPDATE OR DELETE ON users 
+FOR EACH ROW 
+EXECUTE FUNCTION log_replication_changes();
+
+CREATE TRIGGER replication_changes 
+AFTER INSERT OR UPDATE OR DELETE ON user_credentials 
+FOR EACH ROW 
+EXECUTE FUNCTION log_replication_changes();
+
+CREATE TRIGGER replication_changes 
+AFTER INSERT OR UPDATE OR DELETE ON user_masterkey 
+FOR EACH ROW 
+EXECUTE FUNCTION log_replication_changes();
+
+CREATE TRIGGER replication_changes 
+AFTER INSERT OR UPDATE OR DELETE ON vault 
+FOR EACH ROW 
+EXECUTE FUNCTION log_replication_changes();
+
+
+
+
+-----BACK UP VAULT-------
+create table users (
+	id serial,
+	firstname varchar(50),
+	lastname varchar(50),
+	username varchar(50),
+	email varchar(255),
+	creation_timestamp timestamp DEFAULT CURRENT_TIMESTAMP
+);
+
+create table user_credentials (
+	id integer,
+	user_id integer,
+	hashed_password varchar(32)
+);
+
+create table user_masterkey (
+	id integer,
+	user_id integer,
+	encryption_key text,
+	encrypted_masterkey text
+);
+
+create table vault (
+	id integer,
+	user_id integer,
+	vault_account_name varchar(50),
+	vault_user_name varchar(50),
+	vault_encrypted_passwords text
+);

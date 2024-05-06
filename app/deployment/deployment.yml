@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vault-deployment
+  namespace: password-vault
+  labels:
+    app: vault
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 3
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: vault
+      tier: web
+  template:
+    metadata:
+      labels:
+        app: vault
+        tier: web
+    spec:
+      containers:
+      - name: vault
+        image: us-central1-docker.pkg.dev/vaultfinalproject/vaultapp/vault:v7
+        env:
+        - name: KEY_LENGTH
+          valueFrom:
+            configMapKeyRef:
+              name: vault-config
+              key: key_length
+        - name: PRIMARY_DB_USER
+          valueFrom:
+            configMapKeyRef:
+              name: vault-config
+              key: primary_db_user
+        - name: PRIMARY_DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: vault-config
+              key: primary_db_host
+        - name: PRIMARY_DB
+          valueFrom:
+            configMapKeyRef:
+              name: vault-config
+              key: primary_db
+        - name: PRIMARY_DB_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: vault-config
+              key: primary_db_port
+        - name: GLOBAL_KEY
+          valueFrom:
+            configMapKeyRef:
+              name: vault-config
+              key: global_key
+        - name: PRIMARY_DB_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: vault-config
+              key: primary_db_password
+        ports:
+        - containerPort: 9000
+        imagePullPolicy: Always  
+      volumes:
+  # You set volumes at the Pod level, then mount them into containers inside that Pod
+      - name: vault-config
+        configMap:
+      # Provide the name of the ConfigMap you want to mount.
+          name: vault-config
+      

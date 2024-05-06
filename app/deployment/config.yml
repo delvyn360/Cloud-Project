@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: vault-config
+  namespace: password-vault
+data:
+  key_length: "10"
+  primary_db_user: "postgres"
+  primary_db_host: "34.172.205.229"
+  primary_db: "vault"
+  primary_db_port: "5432"
+  global_key: "AdFvceyBwL"
+  primary_db_password: "admin123"

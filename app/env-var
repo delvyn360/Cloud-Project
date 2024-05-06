@@ -1,0 +1,8 @@
+export KEY_LENGTH=10
+export GLOBAL_KEY='AdFvceyBwL'
+export PRIMARY_DB_USER='postgres'
+export PRIMARY_DB_HOST='34.172.205.229'
+export PRIMARY_DB='vault'
+export PRIMARY_DB_PORT=5432
+export PRIMARY_DB_PASSWORD='admin123'
+

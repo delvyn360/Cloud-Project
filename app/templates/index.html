@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vault Index</title>
+</head>
+<style>
+body {
+    background-image: url('static/img/bgnew.png');
+    background-size: cover;
+    background-position: center;
+	 font-family: 'Baskerville Old Face';
+}
+.indexcontainer{
+	border: 1px solid #ccc;
+				border-radius: 5px;
+				background: rgba(255, 255, 255, 0.2); 
+				backdrop-filter: blur(5px);
+				    width: 70%;
+    margin: 3% 2% 0% 15%;
+    height: 550px;
+}
+.page-title{
+color:white;
+    margin: 2% 30% 0 33%;
+    font-size: 50px;
+	font-weight:bold;
+}.	
+    .right-container {  
+		float:left;
+	width:50%;
+    }
+	.left-container{
+	float:left;
+	width:50%;
+	
+	}
+.home-content,.aboutus-content{
+
+color:white;
+margin:8% 2% 2% 5%;
+font-size:20px;
+font-weight:bold;
+text-align: justify;
+line-height: 35px;
+}
+#aboutus-content{
+display:none;
+height:400px;
+}
+#home-content{
+display:block;
+height:400px;
+}
+.content-button,.nav-button{
+background: linear-gradient(15deg, #965a6b 30%, #d6c5d6);
+    color: white;
+    width: 30%;
+margin:8% 3% 3% 5%;
+    padding: 10px;
+    border: none;
+	font-size:20px;
+    font-weight: bold;
+
+}
+.nav-button
+{
+width:20%;
+    padding-bottom: 20px;
+    margin-left: 15%;
+	margin-top:10%;
+    text-align: center;
+}
+#about-button{
+margin-left:50px;
+}
+.content-button:hover{
+background: linear-gradient(15deg,#7a424f, #1d1d33);
+}
+.nav-button:hover{
+background: linear-gradient(15deg,#7a424f, #1d1d33);
+}
+#registration-button{
+margin-top:3%;
+}
+#login-button{
+margin-top:6%;
+}
+input[type="image"]{
+	width: 100px;
+margin-left: 20%;
+    margin-top: 7%;
+	float:left;
+		}
+
+</style>
+<body>
+<div class="page-title">P a s s w o r d  &nbsp; V a u l t</div>
+<div class="indexcontainer">
+
+<div class="left-container">
+<button class="content-button" onclick="homecontent()" id="home-button">Home</button>
+<button class="content-button" id="aboutbutton" onclick="aboutuscontent()">About Us</button>
+<div class="home-content"id="home-content">
+<p>Password Vault application – a robust solution designed to simplify password management while enhancing security. With features ranging from password generation to streamlined login and registration processes, my application offers a comprehensive solution for users seeking to safeguard their digital identities and provide ease of management.</p>
+</div>
+<div class="aboutus-content" id="aboutus-content">
+Delvyn Jones Martin<br>
+UTA Student ID: 1002105545<br>
+Course : Cloud Computing (CSE-5333-001)<br>
+Professor: Habeeb Olufowobi, Ph.D.
+</div>
+</div>
+<div class="right-container">
+   <input type="image" src="{{ url_for('static', filename='/img/fingerprint.png') }}">
+  <button onclick="window.location.href = '{{ url_for('login') }}'" class="nav-button"  id="login-button">Login</button>
+<button onclick="window.location.href = '{{ url_for('register') }}'" class="nav-button"  id="registration-button">Register</button>
+ 
+</div>
+
+</div>
+<script>
+
+function homecontent(){
+	   document.getElementById("home-content").style.display="block";
+	   	   document.getElementById("aboutus-content").style.display="none";
+
+}
+function aboutuscontent(){
+
+	   document.getElementById("home-content").style.display="none";
+	   	   document.getElementById("aboutus-content").style.display="block";
+		   }
+</script>
+</body>
+</html>

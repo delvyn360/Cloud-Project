@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('static/img/bg.png');
+    background-size: cover;
+    background-position: center;
+       
+        }
+		
+        form {
+		margin-bottom:0;
+            border: 3px solid #ccc;
+            max-width: 400px;
+            margin: 2px auto;
+            padding: 10px 20px 0 20px;
+            border-radius: 10px;
+				box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+        }
+        .msg{
+
+        color:white;
+        margin-bottom:10px;
+        }
+        h2 {
+            text-align: center;
+			color:white;
+			  font-weight: bold;
+		
+        }
+        label {
+            font-weight: bold;
+			color: white;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+		input[type="masterkey"]		{
+            width: 100%;
+            padding: 10px;
+			background: none;
+			outline:none;
+			color: white;
+            margin: 5px 0;
+			box-sizing: border-box;
+            border: 3px solid #ccc;
+            border-radius: 10px;
+        }
+
+		.checkbox1
+		{  position: absolute;
+        top: 51.5%;
+        right: 560px;
+        transform: translateY(-50%);}
+	    .checkbox2
+		{  position: absolute;
+        top: 60%;
+        right: 560px;
+        transform: translateY(-50%);}
+		.checkbox3
+		{  position: absolute;
+        top: 69%;
+        right: 560px;
+        transform: translateY(-50%);}
+		.checkbox4
+		{  position: absolute;
+        top: 78%;
+        right: 560px;
+        transform: translateY(-50%);}
+		 
+		
+		
+        button[type="submit"] {
+            border: 0.2px solid #ccc; 
+      background: linear-gradient(15deg,#965a6b 50%, #d6c5d6);
+            color: white;
+            padding: 14px 20px;
+		            margin: 20px 0;
+       			font-size: 20px;
+			  font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+			
+        }
+		
+        button[type="submit"]:hover {
+       background: linear-gradient(15deg,#7a424f, #1d1d33);
+		            
+        }
+        a:visited{
+color:red;
+
+        }
+input[type="password"]::placeholder{color:#cbc3c3; font-style: italic;}
+        ul{
+        color:white;
+        font-size: medium;
+    }
+    </style>
+</head>
+<body>
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+       <ul>
+          {% for message in messages %}
+          <li>{{ message }}</li>
+          {% endfor %}
+       </ul>
+    {% endif %}
+ {% endwith %}
+ 
+<div class="sidediv">
+</div>
+      <div class="registerformdiv">
+    <h2>Registration Form</h2>
+    <form action="" onsubmit="return submitregister()" method="POST">
+        <label for="firstname">First Name</label><br>
+        <input type="text" id="firstname" class="avoidspace" name="firstname" required><br>
+        
+		<label for="lastname">Last Name</label><br>
+        <input type="text" id="lastname" name="lastname" class="avoidspace"required><br>
+		
+		<label for="username">User Name</label><br>
+        <input type="text" id="username" class="avoidspace"name="username" required><br>
+		
+        <label for="email">Email</label><br>
+        <input type="email" id="email" class="avoidspace" name="email" required><br>
+        
+        <label for="password">Password</label><br>
+        <input type="password" id="password" class="avoidspace" name="password" required onkeyup="capslock(event)">
+	    <input type="checkbox" id="checkbox1" class="checkbox1"  onclick="HideShow()"> 
+		        
+        <label for="confirm_password">Confirm Password</label><br>
+        <input type="password" id="confirm_password"class="avoidspace" name="confirm_password" required>
+	    <input type="checkbox" id="checkbox2" class="checkbox2" onclick="HideShow()"> 
+
+        <label for="masterkey">Master Key</label><br>
+        <input type="password" id="masterkey" name="masterkey" class="inputnumbers" placeholder="Mater key must be numbers only"required>
+		<input type="checkbox" id="checkbox3" class="checkbox3" onclick="HideShow()">
+		
+        
+        <label for="confirm_masterkey">Confirm Master Key</label><br>
+		<input type="password" id="confirm_masterkey" class="inputnumbers"name="confirm_masterkey" required><br>
+		<input type="checkbox" id="checkbox4" class="checkbox4" onclick="HideShow()"  > 
+	    
+		<button type="submit">Register</button>
+        
+				 
+        <div class="msg">Existing User? Click  <a href="{{url_for('login')}}">here</a> to login</div>
+ 
+	 </form>
+	
+     
+</div>
+
+	<script>
+        function submitregister() {
+            
+        var password = document.getElementById("password").value;
+        var confirmPassword = document.getElementById("confirm_password").value;
+var masterkey=document.getElementById("masterkey").value;
+var confirmMasterkey=document.getElementById("confirm_masterkey").value;
+        if (password !== confirmPassword) {
+            alert("Passwords do not match");
+            return false;
+			
+        }
+	if(masterkey !== confirmMasterkey) {
+            alert("Master Key do not match");
+            return false;
+			}
+        return true; 
+    }
+
+  
+	  function HideShow() 
+	  {
+        var checkbox1 = document.getElementById("checkbox1");
+		var checkbox2 = document.getElementById("checkbox2");
+		var checkbox3 = document.getElementById("checkbox3");
+		var checkbox4 = document.getElementById("checkbox4");
+		
+		var password = document.getElementById("password");
+		var confirm_password =  document.getElementById("confirm_password");
+		var masterkey = document.getElementById("masterkey");
+		var confirm_masterkey = document.getElementById("confirm_masterkey");
+		
+		
+			
+        if (checkbox1.checked == true)		  {
+		          password.type = "text";           } 
+		else {
+             password.type = "password";           }
+      
+		
+		if (checkbox2.checked == true)		  {
+		          confirm_password.type = "text";           } 
+		else {
+              confirm_password.type = "password";           }
+      		
+        if (checkbox3.checked == true)		  {
+		          masterkey.type = "text";           } 
+		else {
+              masterkey.type = "password";           }
+      
+				
+        if (checkbox4.checked == true)		  {
+		          confirm_masterkey.type = "text";           } 
+		else {
+              confirm_masterkey.type = "password";           }
+      }
+  
+      document.getElementById('masterkey').addEventListener('input', function() {
+            var masterkey = this.value;
+		
+            if (masterkey.length > 6) {
+                alert('Masterkey length should not exceed 6 characters');
+				this.value = '';
+            }
+		
+        });
+		document.getElementById('confirm_masterkey').addEventListener('input', function() {
+            var confirm_masterkey = this.value;
+		
+            if (confirm_masterkey.length > 6) {
+                alert('Masterkey length should not exceed 6 characters');
+				this.value = '';
+            }
+		
+        });
+        var numberInputs = document.getElementsByClassName("inputnumbers");    
+for (var i = 0; i < numberInputs.length; i++) {
+    numberInputs[i].addEventListener("keydown", function(event) {
+        var keyCode = event.which || event.keyCode;
+		if (event.shiftKey) {
+        event.preventDefault(); 
+        return false;
+    }
+        if ((keyCode >= 48 && keyCode <= 57) || // Numeric keys (0-9)
+            (keyCode >= 96 && keyCode <= 105) || keyCode === 8 || // Backspace
+            keyCode === 46 || // Delete
+            (keyCode >= 37 && keyCode <= 40) || 
+            (keyCode >= 33 && keyCode <= 36) || 
+            keyCode === 9 ||  keyCode === 13) { 
+            return true;
+        } else {
+                event.preventDefault();
+                return false;
+            }
+		
+    });
+}
+
+var avoidspace =document.getElementsByClassName("avoidspace");
+ 
+for (var i = 0; i < avoidspace.length; i++) {
+    avoidspace[i].addEventListener("keydown", function(event) {
+        var keyCode = event.which || event.keyCode;
+        if (keyCode === 32 ) { 
+		 event.preventDefault();
+            return false;
+        }
+		
+    });
+}
+    </script>
+
+</body>
+</html>

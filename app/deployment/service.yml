@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: vault-svc
+  namespace: password-vault
+  labels:
+    app: vault
+spec:
+  selector:
+    app: vault
+    tier: web
+  ports:
+  - port: 9000
+    targetPort: 9000
+  type: LoadBalancer
+  loadBalancerIP: 35.225.49.8

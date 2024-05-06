@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+   body {
+	  font-family: "Lato", sans-serif;
+	     background-image: url('static/img/bg.png');
+    background-size: cover;
+    background-position: center;
+
+	}
+  img{
+
+    width:30px;
+    height:30px; 
+     
+  }
+	.gpbutton{
+	   border: 0.2px solid #ccc; 
+			background: linear-gradient(15deg, #965a6b 50%, #d6c5d6); 
+				color: white;
+				padding: 10px 15px;
+			margin-left:29%;
+					margin-top:9.5%;
+
+					font-size: 20px;
+				  font-weight: bold;
+				border-radius: 4px;
+				cursor: pointer;
+				width: 40%;
+				  border-radius: 4px;
+	}
+	.gpbutton:hover{
+	background: linear-gradient(-45deg, #7a424f, #1d1d33);
+	}
+	.managepasswordandmasterkeydialogbox{
+	width:500px;
+	float:left;
+	color:#644862;
+	}
+	#currentusernamevalue{
+	margin:12px 0 18px 0;	
+	}
+	.manageusernamedialogbox{
+	width:500px;
+	float:left;
+	color:#644862;
+	}
+
+	.textboxcss{
+	width:240px;
+		background:none;
+		border:2px solid #ffffff;
+		border-radius:4px;
+		height:30px;
+		color:#644862;
+		font-size:20px;
+		font-weight:bold;
+		outline:none;	
+	}
+	#manageusernamesubmit{
+	margin:0%;
+	}
+	#currentpasswordlabel{
+	margin-top:200px;
+	}
+  #manageusernameback{
+    margin:0 7% 0 25px;
+  }
+  #managepasswordback{
+    margin-left:7%;
+  }
+
+	.backbuttonclass{
+    float:left;
+	margin:3% 0 0 7%; 
+  border: 0.2px solid #ccc; 
+				background: linear-gradient(15deg,#965a6b 50%, #d6c5d6);
+				padding:10px 15px;
+			margin-left:5%;
+color: white;
+					font-size: 20px;
+				  font-weight: bold;
+				border-radius: 4px;
+				cursor: pointer;
+				width: 40%;
+	}
+
+	#managepasswordandmasterkeysubmit{
+	float:left;
+	margin:3% 0 0 5%; 
+
+	}
+	input[type=text]:focus {
+	  border: 3px solid #fffff;
+		outline:none;
+	}
+
+	.managepasswordandmasterkeydialogbox.div1{
+
+	float:left;
+	width:250px;
+
+	font-weight:bold;
+	font-size:20px;
+	line-height: 25.2px;
+	}
+	.managepasswordandmasterkeydialogbox.div2{
+	float:left;
+	font-size:20px;
+	width:250px;
+	font-weight:bold;
+	}
+	.manageusernamedialogbox.div1{
+	float:left;
+	height:150px;
+	width:250px;
+	font-weight:bold;
+	font-size:20px;
+	}
+
+	.manageusernamedialogbox.div2{
+	float:left;
+	text-align:top;
+	font-weight:bold;
+	margin:0;
+	height:150px;
+	font-size:20px;
+	width:250px;
+	}
+	 dialog {
+				width: 350px;
+				padding: 20px;
+				float:left;
+				background-color: linear-gradient(45deg, #ff7e5f, #feb47b);
+				border: 1px solid #ccc;
+				border-radius: 5px;
+				background: rgba(255, 255, 255, 0.5); 
+				backdrop-filter: blur(70px);
+		
+				    margin-left: 30%;
+			}
+			
+	#dialogcontent{
+	background-image: linear-gradient(to right,  #5555CC, #CC55CC);  
+			-webkit-background-clip: text;
+			color: #644862;
+			font-weight:bold;
+			font-size:20px;
+			text-shadow: none;
+
+	}
+	p{
+	font-size:20px;
+	text-shadow: none;
+	}
+			#copybutton{
+			cursor:pointer;
+background: linear-gradient(15deg,#965a6b 50%, #d6c5d6);
+		color:white;
+		width:150px;
+		border:none;
+		float:left;
+		height:44px;
+		font-size:12px;
+		margin-top:3%;
+		margin-left:15px;
+		font-weight:bold;
+		  border-radius: 4px;
+			}
+			#addpassvault{
+			width:150px;
+			float:left;
+			margin-top:3%;
+			margin-left:20px;
+			border:none;
+			  border-radius: 4px;
+		color:white;
+		cursor:pointer;
+		font-size:12px;
+	background: linear-gradient(15deg,#965a6b 50%, #d6c5d6);
+		height:44px;
+		font-weight:bold;
+			}
+			#addpassvault:hover{
+			background: linear-gradient(45deg, #7a424f, #1d1d33);
+				font-weight:bold;
+			}
+			#copybutton:hover{
+			background: linear-gradient(45deg, #7a424f, #1d1d33);
+				font-weight:bold;
+
+			}
+			#displayusername:hover{
+			cursor: no-drop;
+			font-weight:lighter; }
+	#closeButton{
+	margin-left:95%;
+	cursor:pointer;
+	font-weight: bold;
+	color:#7a424f;
+	font-size:20px;
+	text-shadow: none;
+	}
+
+	#closeButton:hover{
+	border:white;
+	color:white;
+	font-weight:bold;
+	text-shadow: none;
+	}
+	.sidebar {
+	  
+	  height: 100%;
+	  width: 0%;
+	  position: fixed;
+	  z-index: 1;
+	  top: 0;
+	  left: 0;
+	  background: linear-gradient(45deg,#965a6b, #3a3a5c); 
+	  overflow-x: hidden;
+	  transition: 0.5s;
+	  padding-top: 60px;
+	}
+	  .dashboard{
+	   font-size : 30px; 
+	   padding-left : 50%;
+
+
+	}
+
+	.sidebar a {
+	  padding: 8px 8px 8px 32px;
+	  text-decoration: none;
+	  font-size: 25px;
+	  color: white;
+	  display: block;
+	  transition: 0.3s;
+	}
+
+	.sidebar a:hover {
+	  color: white;
+	  font-weight: bold;
+	}
+
+	.sidebar .closebtn {
+
+	  position: absolute;
+	  top: 0;
+	  right: 25px;
+	  font-size: 36px;
+	  margin-left: 50px;
+	}
+	.sidebar .profile{
+	color:white;
+	  text-decoration: none;
+	  display: inline-block;
+	  top: 0;
+	  right: 25px;
+	  font-size: 25px;
+	  margin-left: 28px;
+	background: none;
+	border:none;
+	  cursor: pointer;
+	  
+	}
+	.profile:hover{
+	color: white;
+	  font-weight: bold;
+	}
+	.openbutton {
+	  font-size: 40px;
+	  cursor: pointer;
+	  color: white;
+	  padding: 1%;
+	  border: none;
+	  width: 5%;
+	  float:left;
+	  background:none;
+	  }
+
+	.openbutton:hover {
+	 
+	font-weight:bold;
+	 }
+	 
+	.headercontainer{
+	 width: 98%; 
+	 margin: 0 auto;
+		}
+		
+	 .dashboardcontainer
+	 {
+	 
+	float:left;
+	 width: 98%; 
+	 margin: 0 auto;
+	 padding-left:2%;
+
+	 }
+	 
+	 
+	.headercontent {
+				  height: 70px;
+		
+			margin: 1%; /* Set margin */
+			padding: 1%; /* Set padding */
+			box-sizing: border-box; 
+			float: left; 
+		}
+		
+	.headercontent.div1{
+	width:	13%;
+	text-align: center; 
+	color: white;
+	margin-left:3%;
+margin-top: 10px;
+	}
+	 
+	.headercontent.div2{
+	font-weight: bold;
+	width:	60%;
+	font-size: 25px;
+	float:left;
+	font-size:35px;
+	text-align: center; 
+			color: white;
+	}
+	.headercontent.div3{
+	font-weight:bold;
+	margin-top:20px;
+	color: white;
+	font-size: 20px;
+	float:left;
+	width:	10%;
+	
+	}
+  
+  .headercontent.div4{
+
+float:left;
+margin:10px 0 0 35px;
+padding:0;
+  }
+	
+	input[type="image"]{
+	width:30px;
+	height:30px;
+	
+	}
+	.profilecontent{
+			float:left;
+	 width: 98%; 
+	 margin: 0 auto;	
+margin-bottom:5%;
+background:none;	
+			}
+	.profilecontent.div1{
+	display:none;
+
+	  width :40%;
+					
+			margin-left: 400px;
+			margin-top: 2%;
+			
+		 float:left;
+		text-shadow:2px 2px 4px rgba(0, 0, 0, 0.5);
+		 text-align: center;
+		 
+		 padding:6% 3% 5% 0%;
+		 line-height:2;
+		 	   border: 3px solid #ccc;
+color:white;
+              border-radius: 10px;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1)
+			box-sizing: border-box;
+	 }
+	 .profilelabel{
+	color:white;
+	padding-bottom: 3%;
+	  display: inline-block;
+	  right: 25px;text-shadow: 1px 1px #000000;
+	  font-size: 28px;
+	  margin-left: 28px;
+	background: none;
+	border:none;
+	 
+	 }
+	 
+	 .profilelabel:hover{
+	color: white;
+	  font-weight: bold;
+	  cursor:pointer;
+	  
+	}
+	 
+	.dashboardcontent.div1{
+	float:left;
+	  height: 500px;
+	  width :45%;
+			margin-top:1%;
+			margin-left:3%;
+			box-sizing: border-box; 
+		 float:left;
+		text-shadow:2px 2px 4px rgba(0, 0, 0, 0.5);
+		 padding-top: 4%; 
+					 border-radius: 10px;
+					  border: 3px solid #ccc;
+color:white;
+              border-radius: 10px;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+		 
+	 }
+	 
+	  .dashboardcontent.div2{
+	  height: 500px;
+	  width :45%;
+	  margin:1% 2% 1% 2%;
+
+			box-sizing: border-box;
+			 float:left;
+			 text-shadow:2px 2px 4px rgba(0, 0, 0, 0.5);
+	 padding-top: 3%;
+					  border: 3px solid #ccc;
+color:white;
+              border-radius: 10px;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+		 
+	 }
+
+	.generatepwdlabel{
+	 color: white; 
+	 font-size: 35px;
+	 padding-left:25%;
+	 }
+	 
+	 .vaultlabel{ 
+	 color: white;
+	 font-size: 35px;
+	 padding-left:40%;
+
+	  }  
+	   .masterkeylabel{
+	 padding-left: 28%;
+	  margin:10% 0 0 0;
+	 font-size: 20px; }
+	 .vaultcheckbox{
+		position: absolute;
+		top:49.5%;
+        right: 65%;
+        transform: translateY(-50%);
+	 }
+	 
+	 
+	 #masterkey{
+	 margin-left:20%;
+	 margin-top: 10%;
+	font-size:30px;
+	background:none;
+	color:white;
+	  box-sizing: border-box;
+				border: 3px solid #ffffff;
+				border-radius: 4px;
+				outline:none;
+	  
+	  }
+	  
+	  .gpcontents.div1{
+	  
+	  width:40%;
+	  float:left;
+		padding-bottom: 10%;
+		margin-top:2%;
+		height:15%;
+	  }
+	  .gplabel{
+			padding-left: 20%;
+			 font-size: 20px;
+			}
+			
+	 .gpinputs{
+						 margin-left: 10%;
+		margin-top: 2%;
+		width:40%;
+		font-size:20px;
+		height:40px;
+	background:none;
+	color:white;
+	  box-sizing: border-box;
+				border: 3px solid #ffffff;
+				border-radius: 4px;
+				outline:none;
+	  
+			}
+  
+	button[type="submit"] {
+				border: 0.2px solid #ccc; 
+				background: linear-gradient(15deg,#965a6b 50%, #d6c5d6);
+				padding:10px 15px;
+			margin-left:28%;
+					margin-top:15%;
+color: white;
+					font-size: 20px;
+				  font-weight: bold;
+				border-radius: 4px;
+				cursor: pointer;
+				width: 40%;
+				
+			}
+			
+			button[type="submit"]:hover {
+			background: linear-gradient(15deg,#7a424f, #1d1d33);
+						
+
+			} ul{
+        color: aliceblue;
+        font-size: medium;
+    }
+	
+    #checkbox1{
+      position: absolute;
+        top: 70px;
+        right: 30px;  
+        transform: translateY(-50%);
+    }
+    #checkbox2{
+      position: absolute;
+        top: 153px;
+        right: 30px;  
+        transform: translateY(-50%);
+    }
+    #checkbox3{
+      position: absolute;
+        top: 235px;
+        right: 30px;  
+        transform: translateY(-50%);
+    }
+  </style>
+</head>
+
+<body>
+
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+  <ul>
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  {% endwith %}
+
+  <div class="headercontainer">
+    <div class="headercontent div1">
+      <button class="openbutton" onclick="openNav()" id="openbutton">☰</button>
+    </div>
+    <div class="headercontent div2">
+      <label id="dashboardtitle" class="headerlabel">Welcome to MyVault Dashboard</label>
+    </div>
+    <div class="headercontent div3">
+      <label id="username" class="username">Hi, {{ session.firstname }}<label>
+    </div>
+
+
+    <div class="headercontent div4">
+      <form action="" method="POST">
+        <p><a href="{{url_for('logout')}}"><img src="{{ url_for('static', filename='/img/logout.png') }}"
+              alt="Log Out"></a></p>
+
+      </form>
+    </div>
+
+    <div id="sidebar" class="sidebar">
+      <br>
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+      <a href="{{url_for('dashboard')}}">Home</a><br>
+      <button type="button" class="profile" onclick="profile()">Profile</button> <br><br>
+
+      <a href="{{url_for('logout')}}">Log out</a>
+    </div>
+  </div>
+  <div class="dashboardcontainer" id="dashboardcontainer">
+
+    <form action="" method="POST">
+      <div class="dashboardcontent div1">
+        <input type="hidden" name="form_id" value="vaultentry">
+        <label id="vaultlabel" class="vaultlabel">Vault<label><br><br>
+            <label for="masterkeylabel" class="masterkeylabel">Please enter the Master Key<label>
+                <input type="password" id="masterkey" class="inputnumbers" name="masterkey" required> <br>
+				<input type="checkbox" id="vaultcheckbox" class="vaultcheckbox"  onclick="HideShow()">
+
+                <button type="submit" onclick="">Confirm</button>
+      </div>
+    </form>
+
+    <div class="dashboardcontent div2">
+      <form action="" method="POST">
+        <label id="generatepwdlabel" class="generatepwdlabel">Generate Password<label><br><br>
+            <div class="gpcontents div1">
+              <label for="applicationnamelabelgp" class="gplabel">Application Name<label><br><br>
+                  <label for="usernamegplabelgp" class="gplabel">User Name<label>
+            </div>
+            <div class="gpcontents div2">
+              <input type="text" id="applicationnamegp" class="gpinputs" name="applicationname" required><br><br>
+              <input type="text" id="usernamegp" class="gpinputs" name="usernamegp" required><br>
+            </div>
+
+            <button type="button" class="gpbutton" onclick="generatepassworddialogbox()">Generate Password</button>
+
+      
+            <dialog id="passwordDialog">
+              <span id="closeButton" onclick="closeDialog()">X</span>
+              <h3 id="dialogcontent">Application Name</h3>
+              <p id="displayappnamegp"></p>
+              <h3 id="dialogcontent">User Name</h3>
+              <p id="displayusernamegp"></p>
+              <h3 id="dialogcontent">Your Password</h3>
+              <p id="generatepassword"></p>
+              <input type="hidden" name="form_id" value="generatepassword">
+              <button id="copybutton" type="button" onclick="copyPassword()">Copy Password</button>
+              <input type="hidden" name="gpasswordname" id="gpassword">
+              <button id="addpassvault" type="submit">Add Password to Vault</button>
+            </form>
+            </dialog>
+    </div>
+
+
+  </div>
+
+  <div class="profilecontent div1" id="profilecontent">
+
+    <button type="button" id="displayusername" class="profilelabel" onclick="">{{ session.firstname }}</button> <br><br>
+    <button type="button" class="profilelabel" onclick="manageusernamedialogbox()">Change Username</button> <br><br>
+    <button type="button" class="profilelabel" onclick="managepassworddialogbox()">Manage Password</button> <br><br>
+    <button type="button" id="logout" class="profilelabel" onclick="logoutbutton()">Logout</button> <br><br>
+
+  </div>
+  <dialog id="managepassworddialogbox" class="managepasswordandmasterkeydialogbox">
+
+    <div class="managepasswordandmasterkeydialogbox div1">
+      <br><br>
+      <label id="currentpasswordlabel" class="managepassworddialogboxcontent">Enter Current Password<label><br><br><br>
+          <label id="newpasswordlabel" class="managepassworddialogboxcontent">Enter New Password<label><br><br><br>
+              <label id="confirmnewpasswordlabel" class="managepassworddialogboxcontent">Confirm New
+                Password<label><br><br><br>
+    </div><br><br>
+
+    <form action="" method="POST" onsubmit="return validatepassword()">
+      <div class="managepasswordandmasterkeydialogbox div2">
+        <input type="password" id="currentpassword" name="currentpassword" class="textboxcss">
+        <input type="checkbox" id="checkbox1" class="checkbox"  onclick="HideShow()"><br><br><br>
+        <input type="password" id="newpassword" name="newpassword" class="textboxcss">
+        <input type="checkbox" id="checkbox2" class="checkbox"  onclick="HideShow()"><br><br><br>
+        <input type="password" id="confirmnewpassword" name="confirmnewpassword" class="textboxcss">
+        <input type="checkbox" id="checkbox3" class="checkbox"  onclick="HideShow()"><br><br><br>
+        <input type="hidden" name="form_id" value="changepassword">
+      </div>
+      <button id="managepasswordback" class="backbuttonclass" type="button" onclick="closechangepassword()">Back</button>
+      <button id="managepasswordandmasterkeysubmit" type="submit">Submit</button>
+    </form>
+  </dialog>
+
+  <dialog id="manageusernamedialogbox" class="manageusernamedialogbox">
+
+    <div class="manageusernamedialogbox div1">
+      <br><br>
+      <label id="currentusernamelabel" class="manageusernamedialogboxcontent">Enter Current Username<label><br><br><br>
+          <label id="newusernamelabel" class="manageusernamedialogboxcontent">Enter New Username<label><br><br><br>
+    </div><br><br>
+    <form action="" method="POST" onsubmit="return validateusername()">
+      <div class="manageusernamedialogbox div2">
+        <input type="text" id="currentusername" name="currentusername" class="textboxcss"><br><br><br>
+        <input type="text" id="manageusername" name="manageusername" class="textboxcss"><br>
+        <input type="hidden" name="form_id" value="changeusername">
+
+      </div>
+      <button id="manageusernameback" class="backbuttonclass" type="button" onclick="closemanagepassword()">Back</button>
+
+      <button id="manageusernamesubmit" type="submit" onclick="">Submit</button>
+
+    </form>
+  </dialog>
+
+
+
+  <script>
+
+    function logoutbutton() {
+      window.location = "/logout";
+    }
+
+    function validateusername(){
+      var currentusername = document.getElementById("currentusername").value;
+      var manageusername = document.getElementById("manageusername").value;
+      if(!manageusername || !currentusername){
+        alert("Fields should not be empty");
+        return false;
+      }
+    }
+    
+    function validatepassword(){
+    var password = document.getElementById("newpassword").value;
+        var confirmPassword = document.getElementById("confirmnewpassword").value;
+        var currentpassword = document.getElementById("currentpassword").value;
+        if(!password || !confirmPassword || !currentpassword){
+        alert("Fields should not be empty");
+        return false;
+      }
+        if (password !== confirmPassword) {
+            alert("Passwords do not match");
+            return false;
+
+        }
+
+        return true;
+    }
+ 
+    function openNav() {
+
+      document.getElementById("sidebar").style.width = "15%";
+      document.getElementById("openbutton").style.display = "none";
+
+    }
+
+    function closeNav() {
+      document.getElementById("sidebar").style.width = "0";
+
+      document.getElementById("openbutton").style.display = '';
+
+    }
+    function profile() {
+      document.getElementById("sidebar").style.width = "0";
+      var dbcontainer = document.getElementById("dashboardcontainer");
+      var profilecontent = document.getElementById("profilecontent")
+      if (dbcontainer.style.display === "none") {
+        dbcontainer.style.display = "block";
+      } else {
+        dbcontainer.style.display = "none";
+      }
+      if (profilecontent.style.display === "block") {
+        profilecontent.style.display = "none";
+      } else {
+        profilecontent.style.display = "block";
+      }
+      document.getElementById("openbutton").style.display = '';
+
+    }
+
+    function manageusernamedialogbox() {
+      const dialog = document.getElementById('manageusernamedialogbox');
+      dialog.showModal();
+
+    }
+    function closemanagepassword() {
+
+      const dialog = document.getElementById('manageusernamedialogbox');
+      dialog.close();
+    }
+
+    function managepassworddialogbox() {
+
+      const dialog = document.getElementById('managepassworddialogbox');
+      dialog.showModal();
+
+    }
+    function managemasterkeydialogbox() {
+      const dialog = document.getElementById('managemasterkeydialogbox');
+      dialog.showModal();
+    }
+    function closemanagemasterkeydialogbox() {
+      const dialog = document.getElementById('managemasterkeydialogbox');
+      dialog.close();
+    }
+
+    function closechangepassword() {
+      const dialog = document.getElementById('managepassworddialogbox');
+      dialog.close();
+    }
+
+    function generatepassworddialogbox() {
+      const appnamegp = document.getElementById('applicationnamegp').value;
+      const usernamegp = document.getElementById('usernamegp').value;
+      if(!appnamegp || !usernamegp){
+        alert("Fields should not be empty");
+        return false;
+      }
+      else{
+      const appnamegp = document.getElementById('applicationnamegp').value;
+      const usernamegp = document.getElementById('usernamegp').value;
+      const displayappnamegp = document.getElementById('displayappnamegp');
+      const displayusernamegp = document.getElementById('displayusernamegp');
+
+      displayappnamegp.textContent = appnamegp;
+      displayusernamegp.textContent = usernamegp;
+
+      const dialog = document.getElementById('passwordDialog');
+      const passwordElement = document.getElementById('generatepassword');
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+';
+      const passwordLength = 12;
+      let generatepassword = '';
+
+      for (let i = 0; i < passwordLength; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        generatepassword += characters.charAt(randomIndex);
+      }
+
+      passwordElement.textContent = generatepassword;
+      document.getElementById('gpassword').value = generatepassword;
+      dialog.showModal();
+      document.body.classList.add('modal-open');
+    }
+  }
+
+    function closeDialog() {
+      const dialog = document.getElementById('passwordDialog');
+      dialog.close();
+
+    }
+   /* function copyPassword(button) {
+      var copylabel = document.getElementById('copybutton');
+      const passwordElement = document.getElementById('generatepassword');
+      const password = passwordElement.textContent;
+
+      navigator.clipboard.writeText(password)
+        .then(() => {
+          button.textContent = 'Copied';
+        })
+        .catch((error) => {
+          console.error('Failed to copy: ', error);
+          alert('Failed to copy password!');
+        });
+	}*/
+	
+	function copyPassword() {
+    	var password = document.getElementById('generatepassword').textContent;
+    	var textarea = document.createElement('textarea');
+    	textarea.value = password;
+    	document.body.appendChild(textarea);
+   		textarea.select();
+        document.execCommand('copy');
+ document.body.removeChild(textarea);
+ alert("Password is copied to the clipboard");
+}
+    function HideShow() 
+	  { var vaultcheckbox = document.getElementById("vaultcheckbox");
+        var checkbox1 = document.getElementById("checkbox1");
+		var checkbox2 = document.getElementById("checkbox2");
+		var checkbox3 = document.getElementById("checkbox3");
+		
+		var vaultmasterkey = document.getElementById("masterkey");
+		var currentpassword = document.getElementById("currentpassword");
+		var newpassword =  document.getElementById("newpassword");
+		var confirmnewpassword = document.getElementById("confirmnewpassword");		
+		
+		if (vaultcheckbox.checked == true)		  {
+			vaultmasterkey.type = "text";           } 
+		else {
+			vaultmasterkey.type = "password";           }
+      
+		
+			
+        if (checkbox1.checked == true)		  {
+          currentpassword.type = "text";           } 
+		else {
+      currentpassword.type = "password";           }
+      
+		
+		if (checkbox2.checked == true)		  {
+      newpassword.type = "text";           } 
+		else {
+      newpassword.type = "password";           }
+      		
+        if (checkbox3.checked == true)		  {
+          confirmnewpassword.type = "text";           } 
+		else {
+      confirmnewpassword.type = "password";           } }
+      
+  
+	  var avoidspace =document.getElementsByClassName("textboxcss");
+ 
+ for (var i = 0; i < avoidspace.length; i++) {
+	 avoidspace[i].addEventListener("keydown", function(event) {
+		 var keyCode = event.which || event.keyCode;
+		 if (keyCode === 32 ) { 
+		  event.preventDefault();
+			 return false;
+		 }
+		 
+	 });
+ }
+ 
+ document.getElementById('masterkey').addEventListener('input', function() {
+            var masterkey = this.value;
+		
+            if (masterkey.length > 6) {
+                alert('Masterkey length should not exceed 6 characters');
+				this.value = '';
+            }
+		
+        });
+		var numberInputs = document.getElementsByClassName("inputnumbers");    
+for (var i = 0; i < numberInputs.length; i++) {
+    numberInputs[i].addEventListener("keydown", function(event) {
+        var keyCode = event.which || event.keyCode;
+		if (event.shiftKey) {
+        event.preventDefault(); 
+        return false;
+    }
+        if ((keyCode >= 48 && keyCode <= 57) || // Numeric keys (0-9)
+            (keyCode >= 96 && keyCode <= 105) || keyCode === 8 || // Backspace
+            keyCode === 46 || // Delete
+            (keyCode >= 37 && keyCode <= 40) || 
+            (keyCode >= 33 && keyCode <= 36) || 
+            keyCode === 9 ||  keyCode === 13) { 
+            return true;
+        } else {
+                event.preventDefault();
+                return false;
+            }
+		
+    });
+}
+  </script>
+
+</body>
+
+</html>

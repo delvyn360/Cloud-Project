@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+           
+           font-family: Arial, sans-serif;
+           background-image: url('static/img/bg.png');
+    background-size: cover;
+    background-position: center;
+      
+       }
+       .msg{
+margin-top:2%;
+
+       }
+   a:visited{color:red;}
+       .login-box {
+       margin-top:3%;
+       margin-left:40%;
+               margin-bottom:14%;
+
+           width: 300px;		
+                       border: 3px solid #ccc;
+color:white;
+           padding: 20px;    border-radius: 10px;
+           box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+   
+       }
+       label{
+                   font-weight:bold;
+
+       }
+       h2 {
+           text-align: center;
+       }
+       input[type="text"],
+       input[type="password"] {
+           width: 100%;
+           padding: 10px;
+           color: white;
+           outline:none;
+           background: none;
+           margin: 5px 0;
+           box-sizing: border-box;
+           border: 2px solid #ccc;
+           border-radius: 4px;
+       }
+       input[type="submit"] {
+background: linear-gradient(15deg,#965a6b 30%, #d6c5d6);
+           color: white;
+           padding: 14px 20px;
+           margin: 8px 0;
+           border: none;
+           border-radius: 4px;
+           cursor: pointer;
+           width: 100%;
+           font-weight:bold;
+           font-size:18px;
+       }
+       input[type="submit"]:hover {
+background: linear-gradient(15deg,#7a424f, #1d1d33);
+       }
+       input[type="image"]{
+   width: 100px;
+   height: 100px;
+   margin-left: 48%;
+   margin-top:3%;
+       }
+       
+		.checkbox1
+		{  position: absolute;
+        top: 53%;
+        right: 570px;
+        transform: translateY(-50%);}
+    ul{
+        color: white;
+        font-size: medium;
+    }
+    </style>
+</head>
+<body>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+       <ul>
+          {% for message in messages %}
+          <li>{{ message }}</li>
+          {% endfor %}
+       </ul>
+    {% endif %}
+ {% endwith %}
+ <input type="image" src="{{ url_for('static', filename='/img/user.svg') }}" alt="user">
+    <div class="login-box">
+        <h2>Login</h2>
+        <form action="" method="POST">
+            <div class="msg">{{ msg }}</div>
+            <label for="username">Username:</label><br>
+            <input type="text" id="username" class="textboxcss" name="username" required><br><br>
+            
+            <label for="password">Password:</label><br>
+            <input type="password" id="password" class="textboxcss"name="password" required><br>
+            <input type="checkbox" id="checkbox1" class="checkbox1"  onclick="HideShow()">
+            <input type="submit" value="Login">
+            <div class="msg">New User? Please register <a href="{{url_for('register')}}">Register</a></div>
+        </form>
+      
+    </div>
+    <script>
+        	  var avoidspace =document.getElementsByClassName("textboxcss");
+ 
+ for (var i = 0; i < avoidspace.length; i++) {
+	 avoidspace[i].addEventListener("keydown", function(event) {
+		 var keyCode = event.which || event.keyCode;
+		 if (keyCode === 32 ) { 
+		  event.preventDefault();
+			 return false;
+		 }
+		 
+	 });
+ }
+ function HideShow() 
+	  {
+        var checkbox1 = document.getElementById("checkbox1");
+        var password = document.getElementById("password");
+        if (checkbox1.checked == true)		  {
+		          password.type = "text";           } 
+		else {
+             password.type = "password";           }
+    
+		
+      }
+    </script>
+</body>
+</html>

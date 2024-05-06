@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Password Vault</title>
+  <style>
+    body {
+     background-image: url('static/img/bg.png');
+    background-size: cover;
+    background-position: center; 
+
+    font-family: Arial, sans-serif;
+  }
+ 
+dialog{
+  width: 380px;
+        padding: 20px;
+        float:left;
+        background-color: linear-gradient(45deg, #ff7e5f, #feb47b);
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background: rgba(255, 255, 255, 0.5); 
+        backdrop-filter: blur(70px);
+    color:#644862;
+    font-weight:bold;
+    
+}
+#deletequestion{
+  margin-left:90px;
+}
+#deletedialogbox{
+  width: 500px;
+  top:50%;
+    left:40%;
+    transform:translate(-50%, -50%);
+
+}
+.textboxcss{
+line-height: 23px;
+width:100%;
+background: none;
+    border: 2px solid #ffffff;
+    border-radius: 4px;
+	color:#644862;
+	font-weight:bold;
+	font-size:18px;
+  height: 30px;
+  font-weight: bold;
+}
+  #editdialogbox,#addnewdialogbox {
+  float:left;
+        display: none;
+		z-index: 1000;
+		width:40%;  
+   top: 50%;
+  left: 40%;
+ transform: translate(-50%, -50%);
+ position: absolute;		
+            padding: 20px;
+           
+    }
+	  .editdialogbox.div1,.addnewdialogbox.div1{
+      float: left;
+    width: 250px;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 25.2px;
+    margin-left: 4%;
+    margin-right: 2%;
+    height:200px;
+
+}
+.editdialogbox.div2,.addnewdialogbox.div2{
+  float: left;
+    font-size: 20px;
+    width: 250px;
+    font-weight: bold;
+}
+	
+
+  .editdataback,.newdataback, .newdatasubmit{  
+  cursor:pointer;
+background: linear-gradient(15deg,#965a6b 30%, #d6c5d6);
+
+	color:white;
+	width:150px;
+	border:none;
+	float:left;
+	margin:5% 10px 0px 15%;
+	height:44px;
+	font-size:20px;
+		font-weight:bold;
+	  border-radius: 4px;
+  }
+  .editdataback:hover{
+background: linear-gradient(15deg,#7a424f, #1d1d33);				}
+				.newdataback:hover{
+background: linear-gradient(15deg,#7a424f, #1d1d33);				}
+	.editdatasubmit{
+background: linear-gradient(15deg,#965a6b 30%, #d6c5d6);
+	
+	color:white;
+	width:150px;
+	border:none;
+	float:left;
+	margin:5% 10px 0px 15%;
+	height:44px;
+	font-size:20px;
+		font-weight:bold;
+	  border-radius: 4px;
+}	
+	#addnewdialogbox_div1{
+width:275px;
+
+}	
+  img:hover{
+  cursor:grab;
+  }
+  img{
+  margin-left:15px;
+  margin-bottom:5px;
+    display: block;
+  width: 20px;
+    height: 20px;
+
+  }
+  .back-arrow-img {
+  float:left;
+    width: 24px;
+    height: 24px;
+	margin:10px 30px 0px 40px;
+
+	}
+	 td:nth-child(5), td:nth-child(6),td:nth-child(7),td:nth-child(8) {
+    width: 5px; 
+  }
+
+	a{
+	text-decoration:none;
+	
+	}
+  .headercontent.div1{
+  float:left;
+  width:25%;
+  margin:1% 0 0 4%;
+  
+   }
+   .headercontent.div2{
+    float:left;
+  width:30%;
+  FONT-size:20px;
+  margin-left:100px;
+  text-align: center;   
+        -webkit-background-clip: text;
+        color: transparent;
+   }
+   #addnew{
+   margin: 1.5% 0 0 19%;
+     cursor:pointer;
+	padding:10px;
+	font-weight:bold;
+	font-size:18px;
+border:none;
+background: linear-gradient(15deg,#965a6b 30%, #d6c5d6);
+color:white;
+
+   }
+   
+      #addnew:hover{
+	  
+background: linear-gradient(15deg,#7a424f, #1d1d33);
+
+	  }
+
+  h1 {
+    color: white;
+    text-align: center;
+  }
+  table {
+    width: 85%;
+    border-collapse: collapse;
+    margin: 4.5% 10% 0 7%;
+  }
+  th, td {
+  width:15%;
+    border: none;
+    padding: 10px;
+    text-align: left;
+	color:white;
+	font-weight:bold;
+  }
+  th {
+ border-bottom: 1px solid #ffff; 
+ border-top:1px solid #ffff; 
+ backdrop-filter: blur(10px);
+} 
+  tr{
+ border-bottom: 2px solid #ffff;
+ 
+  }
+ 
+  #overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: 999;
+  display: none;
+}
+.hidden{
+  display:none;
+}
+ul{
+        color: white;
+        font-size: medium;
+    }
+  </style>
+</head>
+
+<body>
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+  <ul>
+      {% for message in messages %}
+      <li>{{ message }}</li>
+      {% endfor %}
+  </ul>
+  {% endif %}
+  {% endwith %}
+  <div id="vault-body">
+    <div id="overlay"></div>
+    <div class="headercontent div1">
+      <a href="{{url_for('dashboard')}}" onclick="" class="back"><img src="{{ url_for('static', filename='/img/backnew.png') }}" alt="Back"
+          class="back-arrow-img" Value="Back"></a>
+    </div>
+    <div class="headercontent div2">
+      <h1>Password Vault</h1>
+    </div>
+    <div class="headercontent div3">
+      <button id="addnew" type="button" onclick="addnewdata()">Add New</button>
+    </div>
+    {% block content %}
+    <table id="vault-table">
+      <tr>
+        <th>SNo</th>
+        <th class="hidden">vault_id</th>
+        <th>Application Name</th>
+        <th>User Name</th>
+        <th>Password</th>
+        <th>Reveal</th>
+        <th>Copy</th>
+        <th>Update</th>
+        <th>Delete</th>
+      </tr>
+      {% for rows in vaut_display %}
+      <tr>
+        <td>{{ loop.index }}</td>
+        <td class="hidden">{{ rows[0] }}</td>
+        <td>{{ rows[2] }}</td>
+        <td>{{ rows[3] }}</td>
+        <td class="password"><span id="password{{ loop.index }}" class="passwordclass">{{ rows[4] }}</span></td>
+
+        <td><img id="show{{ loop.index }}" src="{{ url_for('static', filename='/img/eyeclose.svg') }}" alt="Show" onclick="visiblepwd({{ loop.index }})">
+          <img id="hide{{ loop.index }}" src="{{ url_for('static', filename='/img/eye.svg') }}" alt="Hide" style="display: none;" onclick="visiblepwd({{ loop.index }})">
+        </td>
+        <td><img id="copy{{ loop.index }}" src="{{ url_for('static', filename='/img/copynew.svg') }}" alt="Copy" onclick="copyPassword({{ loop.index }})"></td>
+        <td><img id="edit{{ loop.index }}" src="{{ url_for('static', filename='/img/editnew.svg') }}" alt="Edit" onclick="openeditdialogbox({{ loop.index }},this)"></td>
+        <td><img id="delete{{ loop.index }}" src="{{ url_for('static', filename='/img/deletenew.svg') }}" alt="Delete" onclick="opendeletedialogbox({{ loop.index }},this)"></td>
+      </tr>
+      {% endfor %}
+
+    </table>
+    {% endblock %}
+
+    
+    <!-- ********************************************************************************************************************************* -->
+    <dialog id="addnewdialogbox" class="addnewdialogbox">
+      <div class="addnewdialogbox div1" id="addnewdialogbox_div1">
+        <br><br>
+        <label id="newapplicationnamelabel" class="">Enter the application name<label><br><br><br>
+            <label id="newusernamelabel" class="">Enter the username<label><br><br><br>
+                <label id="newpasswordlabel" class="">Enter the password<label><br><br><br>
+      </div><br><br>
+      <form action="" method="POST" onsubmit="return addnewvalidate()">
+      <div class="addnewdialogbox div2">
+        <input type="text" id="newapplicationname" name="newapplicationname" class="textboxcss"><br><br><br>
+        <input type="text" id="newusername" name="newusername" class="textboxcss"><br><br><br>
+        <input type="text" id="newpassword" name="newpassword" class="textboxcss"><br><br><br>
+        <input type="hidden" name="form_id" value="addnewdata">
+      </div>
+      <button id="newdataback" class="newdataback" type="button" onclick="closeaddnewdialogbox()">Back</button>
+      <button id="newdatasubmit" class="newdataback" type="submit" onclick="">Submit</button>
+    </form>
+    </dialog>
+    <!-- ********************************************************************************************************************************* -->
+    <dialog id="editdialogbox">
+
+      <div class="editdialogbox div1">
+        <br><br>
+        <label id="applicationnameeditlabel" class="editdialogboxcontent">Application Name<label><br><br><br>
+            <label id="usernameeditlabel" class="editdialogboxcontent">Username<label><br><br><br>
+                <label id="passwordeditlabel" class="editdialogboxcontent">Password<label><br><br><br>
+      </div><br><br>
+      <form action="" method="POST" onsubmit="return editdatavalidate()">
+      <div class="editdialogbox div2">
+        <input type="text" id="applicationnameedit" name="applicationnameedit" class="textboxcss"><br><br><br>
+        <input type="text" id="usernameedit" name="usernameedit" class="textboxcss"><br><br><br>
+        <input type="text" id="passwordedit" name="passwordedit" class="textboxcss"><br><br><br>
+        <input type="hidden" name="update_vault_id" id="update_vault_id">
+        <input type="hidden" name="form_id" value="editdata">
+      </div>
+      <button id="editdataback" class="editdataback" type="button" onclick="closeeditdialogbox()">Back</button>
+      <button id="editdatasubmit" class="editdataback" type="submit" onclick="">Submit</button>
+      </form>
+    </dialog>
+    <!-- ********************************************************************************************************************************* -->
+    <dialog id="deletedialogbox">
+
+      <div class="deletedialogbox div1">
+      <br><br>
+      <label id="deletequestion">Are you sure you want to delete this data? <label><br><br><br>
+      <form action="" method="POST">
+      <input type="hidden" name="delete_vault_id" id="delete_vault_id">
+      <input type="hidden" name="form_id" value="deletedata">
+      </div>
+      <button id="editdataback" class="editdataback" type="button" onclick="closedeletedialogbox()">Cancel</button>
+      <button id="editdatasubmit" class="editdataback" type="submit" onclick="">Submit</button>
+      </form>
+    </dialog>
+  </div>
+
+ 
+  <script>
+    window.onload = function () {
+      var cellsToModify = document.querySelectorAll("#vault-table .passwordclass");
+
+      cellsToModify.forEach(function (cell, index) {
+        var currentData = cell.textContent;
+        var modifiedData = "************";
+        cell.textContent = modifiedData;
+      });
+    };
+
+    function visiblepwd(rowNumber) {
+      var passwordcol = document.getElementById("password" + rowNumber);
+
+      var show = document.getElementById("show" + rowNumber);
+      var hide = document.getElementById("hide" + rowNumber);
+
+
+      if (hide.style.display !== "none") {
+        hide.style.display = "none";
+        show.style.display = "inline-block";
+        passwordcol.innerText = '************';
+        passwordcol.dataset.visible = "false";
+
+      } else {
+        hide.style.display = "inline-block";
+        show.style.display = "none";
+
+        passwordcol.innerHTML = passwordcol.dataset.password;
+        passwordcol.dataset.visible = "true";
+      }
+
+    }
+    document.querySelectorAll('span[id^="password"]').forEach(span => {
+      span.dataset.password = span.innerText;
+
+      span.dataset.visible = "true";
+    });
+
+
+    function openeditdialogbox(rowNumber, image) {
+      document.getElementById("overlay").style.display = "block";
+      var currentRow = image.closest("tr");
+      var passwordcol = document.getElementById("password" + rowNumber);
+      var cells = currentRow.getElementsByTagName("td");
+      document.getElementById("applicationnameedit").value = cells[2].innerText;
+      document.getElementById("usernameedit").value = cells[3].innerText;
+      document.getElementById("passwordedit").value = passwordcol.dataset.password;
+      document.getElementById("update_vault_id").value = cells[1].innerText;
+      passwordcol.dataset.visible = "true";
+      document.getElementById("editdialogbox").style.display = "block";
+    }
+
+    function addnewvalidate(){
+      var newapplicationname = document.getElementById("newapplicationname").value;
+      var newusername = document.getElementById("newusername").value;
+      var newpassword = document.getElementById("newpassword").value;
+
+      if(!newapplicationname || !newusername || !newpassword){
+        alert("Fields should not be empty");
+        return false;
+      }
+    }
+    function editdatavalidate(){
+      var applicationnameedit = document.getElementById("applicationnameedit").value;
+      var usernameedit = document.getElementById("usernameedit").value;
+      var passwordedit = document.getElementById("passwordedit").value;
+
+      if(!applicationnameedit || !usernameedit || !passwordedit){
+        alert("Fields should not be empty");
+        return false;
+      }
+    }
+
+
+    function opendeletedialogbox(rowNumber, image) {
+      var currentRow = image.closest("tr");
+      var cells = currentRow.getElementsByTagName("td");
+      document.getElementById("delete_vault_id").value = cells[1].innerText;
+      document.getElementById("deletedialogbox").style.display = "block";
+    }
+
+    /*function copyPassword(rowNumber) {
+      var passwordcol = document.getElementById("password" + rowNumber);
+      var passwordcopy = passwordcol.dataset.password;
+      navigator.clipboard.writeText(passwordcopy)
+        .then(() => alert("Password copied!"))
+        .catch(err => console.error('Error in copying: ', err));
+    }*/
+
+    function copyPassword(rowNumber) {
+  	   				var passwordcol = document.getElementById("password" + rowNumber);
+	row=passwordcol.dataset.password;				
+  var textarea = document.createElement('textarea');
+  textarea.value = row;
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand('copy');
+
+ document.body.removeChild(textarea);
+  alert('Password copied to clipboard!');
+}
+
+    function closeeditdialogbox() {
+      document.getElementById("editdialogbox").style.display = "none";
+      document.getElementById("overlay").style.display = "none";
+
+    }
+
+    function closedeletedialogbox() {
+      document.getElementById("deletedialogbox").style.display = "none";
+      //document.getElementById("overlay").style.display = "none";
+
+    }
+    function addnewdata() {
+      document.getElementById("overlay").style.display = "block";
+      document.getElementById("addnewdialogbox").style.display = "block";
+
+    }
+    function closeaddnewdialogbox() {
+      document.getElementById("addnewdialogbox").style.display = "none";
+      document.getElementById("overlay").style.display = "none";
+
+
+    }
+    var avoidspace =document.getElementsByClassName("textboxcss");
+ 
+ for (var i = 0; i < avoidspace.length; i++) {
+	 avoidspace[i].addEventListener("keydown", function(event) {
+		 var keyCode = event.which || event.keyCode;
+		 if (keyCode === 32 ) { 
+		  event.preventDefault();
+			 return false;
+		 }
+		 
+	 });
+ }
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,25 @@
+copy all files from local to VM
+gcloud compute scp --recurse app delvynjonesmartin@local:vault-workdir/ 
+
+
+docker commands
+sudo docker build -t vault:v3 .
+sudo docker tag vault:v3 us-central1-docker.pkg.dev/vaultfinalproject/vaultapp/vault:v3 
+sudo docker push us-central1-docker.pkg.dev/vaultfinalproject/vaultapp/vault:v3
+
+GCP static address
+gcloud compute addresses create password-vault-ip --region us-central1 
+gcloud compute addresses describe password-vault-ip --region us-central1
+
+Kubernetes steps Deployment
+kubectl create -f config.yml -n password-vault   
+kubectl apply -f deployment.yml -n password-vault
+kubectl apply -f service.yml -n password-vault
+
+Testing
+kubectl get all -n password-vault
+kubectl get pods -n password-vault
+kubectl get deployment -n password-vault
+
+
+
